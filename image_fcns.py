@@ -49,7 +49,7 @@ def slice(grid, im, step_w, step_h):
             img_slice[i].append(im.crop((i * step_w, j * step_h, (i + 1) * step_w, (j + 1) * step_h)))  # x1,y1,x2,y2
     return img_slice
 
-def compose(grid, img_slice, width_def, height_def):
+def compose(grid, img_slice):
 
     for k in range(grid):
         for l in range(grid - 1):
@@ -64,7 +64,7 @@ def compose(grid, img_slice, width_def, height_def):
     return image
 
 
-def grab_foto(path):
+def grab_photo(path):
     imgs = []
     valid_images = [".jpg", ".png"]
     for f in os.listdir(path):
