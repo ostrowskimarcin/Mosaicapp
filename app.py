@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 from mosaic import Mosaic
 from PIL import Image
-#from detect_blur import *
+from detect_blur import *
 
 
 
@@ -103,6 +103,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuPlik.menuAction())
 
         self.pushButton_start.clicked.connect(self.start)
+        self.detect_blur.clicked.connect(self.exec_detect_blur)
         self.action_load_img.triggered.connect(self.load_image)
         self.action_load_path.triggered.connect(self.load_path)
 
@@ -181,6 +182,11 @@ class Ui_MainWindow(object):
             self.mode = 2
         elif self.mode_setter.currentText() == "RAND+":
             self.mode = 3
+
+    def exec_detect_blur(self):
+        file = str(QFileDialog.getExistingDirectory())
+        dir_db = os.path.join(file, '*.jpg')
+        detect_blur(dir_db, file)
 
 
 
