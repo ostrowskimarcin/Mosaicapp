@@ -22,6 +22,7 @@ def detect_blur(dir1, dir2):
 	data_dir2 = os.path.join(data_dir0, 'fotg_cut\*.jpg')
 	data_dir3 = os.path.join(data_dir0, 'ready\ostre')
 	data_dir4 = os.path.join(data_dir0, 'ready\\rozmazane')
+	data_dir5 = os.path.join(data_dir0, 'ready')
 
 	for imagePath in glob.glob(dir1):
 		image = Image.open(imagePath)
@@ -44,12 +45,27 @@ def detect_blur(dir1, dir2):
 		fm = variance_of_laplacian(gray)
 		text = "Not Blurry"
 
+		if not os.path.isdir(data_dir5):
+			os.mkdir(data_dir5)
+
 		if fm < 200:
 			text = "Blurry"
-			os.chdir(data_dir4)
-			filename = os.path.basename(imagePath)
-			cv2.imwrite(filename, image)
+			if os.path.isdir(data_dir4):
+				os.chdir(data_dir4)
+				filename = os.path.basename(imagePath)
+				cv2.imwrite(filename, image)
+			else:
+				os.mkdir(data_dir4)
+				os.chdir(data_dir4)
+				filename = os.path.basename(imagePath)
+				cv2.imwrite(filename, image)
 		else:
-			os.chdir(data_dir3)
-			filename = os.path.basename(imagePath)
-			cv2.imwrite(filename, image)
+			if os.path.isdir(data_dir3):
+				os.chdir(data_dir3)
+				filename = os.path.basename(imagePath)
+				cv2.imwrite(filename, image)
+			else:
+				os.mkdir(data_dir3)
+				os.chdir(data_dir3)
+				filename = os.path.basename(imagePath)
+				cv2.imwrite(filename, image)
