@@ -52,5 +52,5 @@ class Mosaic:
                 del temp_fotos[rand]
 
         image = compose(self.grid, slice_output, self.width_default, self.height_default)
-        image.save('mosaic.jpg')
+        image.save('temporary_img.jpg')
         return image
