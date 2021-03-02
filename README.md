@@ -1,40 +1,42 @@
 # mosaic-app
-Image processing desktop application providing 4 modes of mosaic making. Also has part providing sharp images for mosaic purposes. PyQt based GUI.
+Image processing desktop application providing 4 modes of mosaic making. Also has part providing sharp and blurry image bases for mosaic purposes. PyQt based GUI.
 
 [![Generic badge](https://img.shields.io/badge/python-3.7.7-blue.svg)](https://shields.io/)   [![Generic badge](https://img.shields.io/badge/anaconda-2019.10-green.svg)](https://shields.io/)   [![Generic badge](https://img.shields.io/badge/Pillow-7.0.0-orange)](https://shields.io/)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-## Usage
+## Parts of application
 
-### Choose between CPU and GPU calculation
-Below line of code lets you choose used processing unit, comment it to use GPU.
-```
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-```
+### Detect_blur
+The part responsible for providing image base in working directory, decides if photos from certain location are blurry or not and splits them into two folders.
 
-### training_app.py
-Artificial neural network architecture and training process.
+### PIX mode
+Prepares a grid and fills every grid part with mean value of RGB of that area in original picture.
 
-### testing_app.py
-Script used to verify neural network effectiveness on the test dataset.
+### RAW mode
+This mode converts RGB to HSV color base and searches in chosen folder for picture that fits best for the grid element, and replaces that area of original picture with found picture.
 
-### classify.py
-Main script used to show neural network predictions on given images. Image should be given as path, without any quotation marks and apostrophes.
+### RAW+ mode
+This mode works basically the same as the previous one, but also considers difference in H value between part of original image and the found one to match them.
 
-![classify](https://user-images.githubusercontent.com/48838669/84918313-bb408a80-b0c0-11ea-921d-22909eec8dbc.png)
+### RAND+ mode
+In this case program gets random image for every grid part and matches H value for grid part and inserted random picture.
+
+## Using
+To start application it is needed just to interpret main.py with Python interpreter.
+In the right bottom you will find detect_blur button, which activates detect_blur method. The only thing that should be done is to choose folder which contains pictures that we want to include. Script automatically creates certain folders in working directory.
+All other functionalities are enabled after setting image that we want to process and folder that contains images needed to prepare mosaic. Then there is a possibility to chose mode and grid size, and after clicking start scripts will make their work.
 
 ## Anaconda packages being used
-* numpy 1.18.1
-* matplotlib 3.1.3
-* opencv 3.4.2
-* tensorflow 2.1.0
-* tqdm 4.46.0
-* tabulate 0.8.3
-* 
+* PyQt
+* PIL
+* opencv
+* sys
+* glob
+
 ## Credits
 The project has been developed by:
 - [Michał Kliczkowski](https://github.com/michal090497)
-- [Marcin Ostrwski](https://github.com/ostrowskimarcin)
+- [Marcin Ostrowski](https://github.com/ostrowskimarcin)
 
 ## License
  
