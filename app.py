@@ -6,6 +6,7 @@ from PIL import Image
 
 import os
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -25,19 +26,16 @@ class Ui_MainWindow(object):
         self.comboBox_grid.addItem("")
         self.comboBox_grid.hide()
 
-
         self.pushButton_start = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_start.setGeometry(QtCore.QRect(540, 410, 89, 25))
         self.pushButton_start.setObjectName("pushButton_start")
         self.pushButton_start.hide()
-
 
         self.label_grid = QtWidgets.QLabel(self.centralwidget)
         self.label_grid.setGeometry(QtCore.QRect(480, 330, 51, 21))
         self.label_grid.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.label_grid.setObjectName("label_grid")
         self.label_grid.hide()
-
 
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setGeometry(QtCore.QRect(20, 410, 361, 23))
@@ -89,7 +87,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Mosaicapp"))
@@ -111,8 +108,6 @@ class Ui_MainWindow(object):
         self.action_load_img.setText(_translate("MainWindow", "Load image"))
         self.action_save_img.setText(_translate("MainWindow", "Save image"))
 
-
-
     def start(self):
         self.msc = Mosaic()
         self.msc.im = self.img_file
@@ -125,7 +120,6 @@ class Ui_MainWindow(object):
         self.mozaika.setPixmap(QtGui.QPixmap('temporary_img.jpg'))
         os.remove('temporary_img.jpg')
 
-
     def load_image(self):
         self.img = QFileDialog.getOpenFileName()
         self.img_file = Image.open(self.img[0])
@@ -135,7 +129,6 @@ class Ui_MainWindow(object):
         self.pushButton_start.show()
         self.label_grid.show()
         self.comboBox_grid.show()
-
 
     def load_path(self):
         self.path = QFileDialog.getExistingDirectory()
@@ -149,7 +142,7 @@ class Ui_MainWindow(object):
         print('XXXXXXXXXXXXXXXXXXXXXXXXXXXxx')
         self.new_image = self.new_image.resize(self.w.size_to_save)
         self.new_image.save(self.w.name_to_save)
-        #if self.new_image:
+        # if self.new_image:
         #    name_to_save = QFileDialog.getSaveFileName()[0]
         #    print(name_to_save)
         #    self.new_image.save(name_to_save, 'JPEG')
@@ -197,10 +190,6 @@ class Widget(QWidget):
 
         self.show()
 
-    def on_click(self):
-        self.name_to_save = self.textbox.text()+'.jpg'
-        self.get_size()
-
     def get_size(self):
         id = self.combo.currentIndex()
         if id == 0:
@@ -216,12 +205,6 @@ class Widget(QWidget):
         elif id == 5:
             self.size_to_save = (5031, 3579)
 
-
-
-
-
-
-
-
-
-
+    def on_click(self):
+        self.name_to_save = self.textbox.text() + '.jpg'
+        self.get_size()
