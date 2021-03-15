@@ -73,6 +73,7 @@ class Ui_MainWindow(object):
         self.action_load_img.setObjectName("action_load_img")
         self.action_save_img = QtWidgets.QAction(MainWindow)
         self.action_save_img.setObjectName("action_save_img")
+        self.action_save_img.setEnabled(False)
 
         self.menuPlik.addAction(self.action_load_path)
         self.menuPlik.addAction(self.action_load_img)
@@ -120,6 +121,8 @@ class Ui_MainWindow(object):
         self.mozaika.setPixmap(QtGui.QPixmap('temporary_img.jpg'))
         os.remove('temporary_img.jpg')
 
+        self.action_save_img.setEnabled(True)
+
     def load_image(self):
         self.img = QFileDialog.getOpenFileName()
         self.img_file = Image.open(self.img[0])
@@ -139,20 +142,13 @@ class Ui_MainWindow(object):
 
     def save_image(self):
         self.w = Widget()
-        print('XXXXXXXXXXXXXXXXXXXXXXXXXXXxx')
-        self.new_image = self.new_image.resize(self.w.size_to_save)
-        self.new_image.save(self.w.name_to_save)
-        # if self.new_image:
-        #    name_to_save = QFileDialog.getSaveFileName()[0]
-        #    print(name_to_save)
-        #    self.new_image.save(name_to_save, 'JPEG')
+        self.w.get_mosaic_img(self.new_image)
 
 
 class Widget(QWidget):
     def __init__(self):
         super().__init__()
-        self.name_to_save = None
-        self.size_to_save = None
+        self.img = None
         self.initUI()
 
     def initUI(self):
@@ -186,25 +182,32 @@ class Widget(QWidget):
 
         self.button = QPushButton('Save', self)
         self.button.move(300, 20)
-        self.button.clicked.connect(self.on_click)
+        self.button.clicked.connect(self.save)
 
         self.show()
 
-    def get_size(self):
+    def get_size(self) -> tuple:
         id = self.combo.currentIndex()
         if id == 0:
-            self.size_to_save = (720, 480)
+            size = (720, 480)
         elif id == 1:
-            self.size_to_save = (1280, 720)
+            size = (1280, 720)
         elif id == 2:
-            self.size_to_save = (1920, 1080)
+            size = (1920, 1080)
         elif id == 3:
-            self.size_to_save = (2551, 1819)
+            size = (2551, 1819)
         elif id == 4:
-            self.size_to_save = (3579, 2551)
+            size = (3579, 2551)
         elif id == 5:
-            self.size_to_save = (5031, 3579)
+            size = (5031, 3579)
+        return size
 
-    def on_click(self):
-        self.name_to_save = self.textbox.text() + '.jpg'
-        self.get_size()
+    def get_mosaic_img(self, mosaic):
+        self.img = mosaic
+
+    def save(self):
+        name_to_save = self.textbox.text() + '.jpg'
+        size_to_save = self.get_size()
+        self.img = self.img.resize(size_to_save)
+        self.img.save(name_to_save, 'JPEG')
+        self.close()
